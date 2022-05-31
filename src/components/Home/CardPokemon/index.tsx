@@ -9,23 +9,18 @@ interface CardPokemonProps {
   viewDetail: viewDetail;
   setViewDetail: React.Dispatch<React.SetStateAction<viewDetail>>;
 }
+
 const CardPokemon = ({
   pokemons,
   viewDetail,
   setViewDetail,
 }: CardPokemonProps) => {
-  const handleDetail = (id: number) => {
-    // setTimeout(() => {
-    //   window.scrollTo({
-    //     top: document.querySelector(".container")?.clientHeight,
-    //     behavior: "smooth",
-    //   });
-    // }, 400);
-    if (!viewDetail.isOpened) {
-      setViewDetail({ id, isOpened: true });
-    }
-  };
-
+  // const handleDetail = (idItem: number) => {
+  //   setViewDetail({ ...viewDetail, id: idItem });
+  //   if (!viewDetail.isOpened) {
+  //     setViewDetail({ ...viewDetail, isOpened: true });
+  //   }
+  // };
   return (
     <>
       <section
@@ -40,7 +35,7 @@ const CardPokemon = ({
             <div
               key={item.id}
               className=""
-              onClick={() => handleDetail(item.id)}
+              // onClick={(idItem) => handleDetail(item.id)}
             >
               <Card
                 viewDetail={viewDetail}

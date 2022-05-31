@@ -27,18 +27,23 @@ const CardPokemon = ({
 }: Props) => {
   const [isSelected, setSelected] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log(id, viewDetail.id);
+  // useEffect(() => {
+  //   setSelected(id === viewDetail.id);
+  // }, [viewDetail]);
+  // console.log(isSelected);
+  const elementDetail = document.getElementById(`${id}`);
 
-    setSelected(id === viewDetail.id);
-  }, [viewDetail]);
-  const pkmList = document.querySelector(".pokemon-list-detailed");
   const closeDetail = () => {
     setViewDetail({
       id: 0,
       isOpened: false,
     });
-    setSelected(false);
+    if (elementDetail) {
+      console.log("remove");
+
+      elementDetail.classList.remove("scale-out-card");
+      elementDetail.classList.add("scale-in-card");
+    }
   };
 
   const handleUnHover = (e: any) => {
@@ -51,9 +56,27 @@ const CardPokemon = ({
     e.target.classList.remove("scale-out");
   };
 
+  const handleDetail = (idItem: number) => {
+    setViewDetail({ ...viewDetail, id: idItem });
+
+    if (!viewDetail.isOpened) {
+      setViewDetail({ ...viewDetail, isOpened: true });
+    }
+    setSelected(true);
+    if (elementDetail) {
+      console.log("add");
+      elementDetail.classList.remove("scale-in-card");
+      elementDetail.classList.add("scale-out-card");
+    }
+  };
+
   return (
     <>
-      <section className="pokemon-list-container relative" id={`pokemon-${id}`}>
+      <section
+        onClick={(idItem) => handleDetail(id)}
+        className="pokemon-list-container relative visible"
+        id={`pokemon-${id}`}
+      >
         <p className="pokemon-name">{name}</p>
         <img
           onMouseLeave={(e) => handleUnHover(e)}
@@ -61,19 +84,14 @@ const CardPokemon = ({
           src={image}
           alt=""
         />
-        {/* {isSelected ? ( */}
         <section
-          style={
-            isSelected
-              ? { animation: "scaleInCard 0.5s forwards !important" }
-              : { transform: "scaleOutCard 0.5s forwards !important" }
-          }
+          id={`${id}`}
           className="pokemon-list-detailed absolute top-[-45%] left-[-45%] z-[1000] "
         >
           <div className="detail-container">
-            <p onClick={closeDetail} className="detail-close">
+            <div onClick={closeDetail} className="detail-close">
               X
-            </p>
+            </div>
             <div className="detail-info">
               <img src={image} alt="" className="detail-image" />
               <p className="detail-name">{name}</p>

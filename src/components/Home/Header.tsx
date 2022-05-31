@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { clientApi } from "../../configApi/api";
 import { Pokemon, PokemonDetail } from "../../interface";
@@ -83,4 +83,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
